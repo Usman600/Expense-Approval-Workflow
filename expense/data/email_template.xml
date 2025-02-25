@@ -1,0 +1,18 @@
+<odoo>
+    <record id="email_template_expense_approval" model="mail.template">
+        <field name="name">Expense Approval Request</field>
+        <field name="model_id" ref="hr_expense.model_hr_expense"/>
+        <field name="email_from">${(object.employee_id.work_email or object.company_id.email)|safe}</field>
+        <field name="email_to">${object.employee_id.parent_id.work_email}</field>
+        <field name="subject">Expense Approval Needed: ${object.name}</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear ${object.employee_id.parent_id.name},</p>
+            <p>${object.employee_id.name} has submitted an expense for <strong>${object.total_amount} PKR</strong> which requires your approval.</p>
+            <p>Please review the expense in Odoo.</p>
+            <p>Best Regards,</p>
+            <p>Odoo Expenses</p>
+            ]]>
+        </field>
+    </record>
+</odoo>
